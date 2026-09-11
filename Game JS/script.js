@@ -1,4 +1,5 @@
 // Script Actions
+const environment = document.querySelector("environment");
 const actions = document.querySelector(".functions");
 const container = document.querySelector(".actions");
 const description = document.querySelector(".detalhes");
@@ -8,7 +9,6 @@ actions.addEventListener("click", e => {
         const btn = e.target;
 
         if(btn.textContent === "FIGHT"){
-            console.log("foi");
             actions.textContent = "";
             actions.style.width = "65%";
             description.style.width = "35%";
@@ -20,6 +20,10 @@ actions.addEventListener("click", e => {
     }
 
 }) 
+
+function reconstrucao(){
+    container.style.display = "flex";
+}
 
 function ataques(){
 
@@ -116,7 +120,11 @@ actions.addEventListener("click", e => {
             enemyAttack();
         }, 2000);
         
-        container.style.display = "flex";
+        setTimeout(() => {
+            reconstrucao();
+            return;
+        }, 3000);
+        
     }
 })
 
