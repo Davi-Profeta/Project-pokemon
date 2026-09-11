@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="environment">
+
+        <div class="enemy">
+
+            <div class="statsE">
+                <div class="barraE">
+
+                    <div class="NameLevel">
+                        <p class="name">Charmander</p>
+
+                         <div class="LV">
+                            <p>Lv </p>
+                            <p class="nivel">20</p>
+                        </div>
+
+                    </div>
+                    <div class="HPDiv">
+                        <div class="hp">HP</div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="space">
+               <model-viewer class="pokemonE" src="Models/gengar.glb" alt="Gengar" auto-rotate camera-controls disable-zoom shadow-intensity="1"></model-viewer>
+            </div>
+            
+        </div>
+
+        <div class="player">
+
+            <div class="space">
+                <a href="https://pokemondb.net/pokedex/charmander"><img class="pokemonP" src="https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmander.gif" alt="Charmander"></a>
+            </div>
+
+            <div class="statsP">
+                <div class="barraP">
+
+                    <div class="NameLevel">
+                        <p class="name">Charmander</p>
+
+                        <div class="LV">
+                            <p>Lv </p>
+                            <p class="nivel">18</p>
+                        </div>
+                        
+                    </div>
+                    <div class="HPDiv">
+                        <div class="hp">HP</div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="actions">
+            <div class="detalhes">
+
+            </div>
+
+            <div class="functions">
+                <p class="NameActions">FIGHT</p>
+                <p class="NameActions">BAG</p>
+                <p class="NameActions">POKÉMON</p>
+                <p class="NameActions">RUN</p>
+            </div>
+
+        </div>
+
+    </div>
+    
+    
+   
+
+</body>
+    <script src="Pokemons/Gen1/FogoStats/Stats.js"></script>
+    <script src="script.js"></script>
+</html>
