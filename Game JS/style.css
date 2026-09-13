@@ -1,0 +1,183 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    /* Sem overflow, garante que o jogo preencha a tela sem gerar barra de rolagem */
+}
+
+.environment{
+    background-color: rgb(190, 190, 190);
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    /* Vira o "chão" onde o .actions absoluto vai se referenciar */
+}
+
+.enemy{
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.barraE{
+    background-color: wheat;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 28vw;
+    height: 18vh;
+    margin: 2.5rem;
+    padding: 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+}
+
+.barraP{
+    background-color: wheat;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 28vw;
+    height: 18vh;
+    margin: 2.5rem;
+    padding: 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+}
+
+.NameLevel{
+    display: flex;
+    justify-content: space-between;
+}
+
+.LV{
+    display: flex;
+}
+
+.statsE{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.statsP{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.player{
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.space{
+    height: 90%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Altura relativa ao pai, então a borda envolve o Pokémon inteiro em vez de cortar ele no meio */
+}
+
+.pokemonE{
+    border: solid black 2px;
+    width: clamp(180px, 20vw, 320px);
+}
+
+.pokemonP{
+    border: solid black 2px;
+    width: clamp(200px, 22vw, 380px);
+}
+
+.HPDiv{
+    margin-top: 1rem;
+}
+.hp{
+    background-color: green;
+    width: 100%;
+    transition: width 1s linear ;
+}
+
+
+/* dasdas */
+.actions{
+    display: flex;
+    border: solid 3.5px black;
+    height: 25vh;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: black;
+    /* Fica grudado embaixo da tela, sobrepondo a batalha */
+    padding: 1rem;
+}
+.detalhes{
+    border: solid rgb(0, 110, 255) 5px;
+    border-radius: 20px;
+    background-color: rgba(238, 255, 0, 0.925);
+    height: 100%;
+    width: 50%;
+    font-size: 5rem;
+}
+.functions{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: solid 5px rgba(52, 0, 241, 0.836);
+    border-radius: 20px;
+    background-color: rgba(240, 248, 255, 0.774);
+    height: 100%;
+    width: 50%;
+}
+/*.functions{
+
+    position: fixed;
+    z-index: 2;
+    bottom: 15px;
+    left: auto;
+    border: solid 5px rgba(52, 0, 241, 0.836);
+    border-radius: 20px;
+    background-color: rgba(240, 248, 255, 0.774);
+    height: 21vh;
+    width: 98%;
+} */
+.NameActions{
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.divs{
+    width: 35%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.pokemonE{
+    display: block;
+    border: solid black 2px;
+    width: clamp(180px, 20vw, 320px);
+    height: clamp(180px, 20vw, 320px);
+    --poster-color: transparent;
+    background-color: transparent;
+}
