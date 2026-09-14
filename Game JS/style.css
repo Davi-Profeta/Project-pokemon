@@ -12,6 +12,7 @@ html, body{
 }
 
 .environment{
+    display: none;
     background-color: rgb(190, 190, 190);
     width: 100vw;
     height: 100vh;
