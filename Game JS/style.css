@@ -11,6 +11,54 @@ html, body{
     /* Sem overflow, garante que o jogo preencha a tela sem gerar barra de rolagem */
 }
 
+
+/* Aba antes da batalha */
+
+.start{
+    height: 100vh;
+}
+
+.battle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff0000;
+    height: 15vh;
+    border: solid 5px black;
+    border-radius: 10px;
+    margin: 1rem;
+    font-size: 2rem;
+}
+
+.container{
+    height: 85vh;
+    margin: 1rem;
+}
+
+.hPokemons{
+    border: solid black 3px;
+    height: 10vh;
+}
+
+.Pokemons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    height: 68vh;
+    margin-top: 1rem;
+    border: solid 3px black;
+    padding: 1rem;
+}
+
+.Poke{
+    border: solid 2px black;
+    height: 19.5vh;
+    width: 30vw;
+}
+
+
+/* //////////////////////////////////////////////////////////////// */
+
 .environment{
     display: none;
     background-color: rgb(190, 190, 190);
