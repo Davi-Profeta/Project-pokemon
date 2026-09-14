@@ -58,8 +58,13 @@ const lv = document.querySelectorAll(".nivel");
 const lvInimigo = Number(lv[0].textContent);
 const lvPlayer = Number(lv[1].textContent);
 
-const pokemonInimigo = criarPokemon(nameInimigo, Gengar, lvInimigo);
-const pokemonJogador = criarPokemon(namePlayer, Charmander, lvPlayer);
+const DexEnemy = pokedex.find(e => e.nome === nameInimigo);
+const DexPlayer = pokedex.find(e => e.nome === namePlayer);
+const baseEnemy = DexEnemy.stats;
+const basePlayer = DexPlayer.stats;
+
+const pokemonInimigo = criarPokemon(nameInimigo, baseEnemy, lvInimigo);
+const pokemonJogador = criarPokemon(namePlayer, basePlayer, lvPlayer);
 
 function gerarIV() {
     return Math.floor(Math.random() * 32); // 0 a 31
@@ -106,15 +111,16 @@ function criarPokemon(nome, base, nivel) {
 // Dano
 let HPDiv = document.querySelectorAll(".hp");
 let HPEnemy = pokemonInimigo.statsReais.HP;
-const HPMax = HPEnemy;
+const HPMaxEnemy = HPEnemy;
 let HPPlayer = pokemonJogador.statsReais.HP;
+const HPMaxPlayer = HPPlayer;
 
 
 actions.addEventListener("click", e => {
     if(e.target.classList.contains("divs")){
 
         const text = e.target.textContent;
-        const ataque = moves.charmander.find(e => e.name === text);
+        const ataque = movesFire.charmander.find(e => e.name === text);
         const damage = Number(ataque.power);
         HPEnemy -= damage;
         if(HPEnemy <= 0){
@@ -128,7 +134,7 @@ actions.addEventListener("click", e => {
         setTimeout(() => { /* Sem isso, o mesmo clique que ativou o golpe também dispararia esse listener, pulando a espera por um novo clique do jogador */
             document.addEventListener("click", e => {
 
-            const porcentagem = (HPEnemy / HPMax) * 100;
+            const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
             HPDiv[0].style.width = porcentagem + "%";
             container.style.display = "none";
 
@@ -156,12 +162,11 @@ actions.addEventListener("click", e => {
 
 function enemyAttack(){
     const stats = pokemonInimigo;
-    const Attacks = moves.charmander;
+    const Attacks = movesFire.charmander;
     const indiceAleatorio = Math.floor(Math.random() * Attacks.length);
     const ataqueAleatorio = Attacks[indiceAleatorio];
 
     const power = Number(ataqueAleatorio.power);
-    console.log(power);
     HPPlayer -= power;
     if(HPPlayer <= 0 ){
         HPPlayer = 0;
@@ -173,7 +178,7 @@ function enemyAttack(){
     setTimeout(() => { /* Sem isso, o mesmo clique que ativou o golpe também dispararia esse listener, pulando a espera por um novo clique do jogador */
         document.addEventListener("click", e => {
 
-            const porcentagem = (HPPlayer / HPMax) * 100;
+            const porcentagem = (HPPlayer / HPMaxPlayer) * 100;
             HPDiv[1].style.width = porcentagem + "%";
             container.style.display = "none";
 
