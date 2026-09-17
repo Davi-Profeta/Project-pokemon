@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -21,17 +21,34 @@
         <main class="container">
             
             <div class="hPokemons">
-                <p>Escolha seu Pokémon</p>
+                <h2>Escolha seu Pokémon</h2>
             </div>
 
             <div class="Pokemons">
 
                 <div class="Poke">
 
+                    <div class="PokeImg">
+                        <img class="individual" src="https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif" alt="Charmander"></a>
+                    </div>
+
+                    <div class="descriptionPoke">
+                        <p class="nameStart">Charmander</p>
+                    </div>
+
                 </div>
+                    
 
                 <div class="Poke">
 
+                    <div class="PokeImg">
+                        <img class="individual" src="https://img.pokemondb.net/sprites/black-white/anim/normal/gengar.gif" alt="Gengar">
+                    </div>
+
+                    <div class="descriptionPoke">
+                        <p class="nameStart">Gengar</p>
+                    </div>
+                    
                 </div>
 
                 <div class="Poke">
@@ -101,7 +118,7 @@
         <div class="player">
 
             <div class="space">
-                <a href="https://pokemondb.net/pokedex/charmander"><img class="pokemonP" src="https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmander.gif" alt="Charmander"></a>
+                <img class="pokemonP" src="https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmander.gif">
             </div>
 
             <div class="statsP">
@@ -145,8 +162,12 @@
    
 
 </body>
+    <!-- Carregue as dependências de dados primeiro -->
     <script src="Pokemons/Gen1/FogoStats/StatsFire.js"></script>
     <script src="Pokemons/Gen1/GhostStats/StatsGhost.js"></script>
     <script src="Pokemons/Gen1/Pokedex.js"></script>
+    
+    <!-- Carregue a lógica do jogo depois -->
+    <script src="assets/start.js"></script>
     <script src="script.js"></script>
 </html>
