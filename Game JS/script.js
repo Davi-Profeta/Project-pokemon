@@ -1,44 +1,51 @@
+
 // Script Actions
 const environment = document.querySelector("environment");
 const actions = document.querySelector(".functions");
 const container = document.querySelector(".actions");
 const description = document.querySelector(".detalhes");
 
-actions.addEventListener("click", e => {
-    if(e.target.classList.contains("NameActions")){
-        const btn = e.target;
+function startBattle() {
 
-        if(btn.textContent === "FIGHT"){
-            actions.textContent = "";
-            actions.style.width = "65%";
-            description.style.width = "35%";
-            
-            ataques();
+    actions.addEventListener("click", e => {
+        if (e.target.classList.contains("NameActions")) {
+            const btn = e.target;
+
+            if (btn.textContent === "FIGHT") {
+                actions.textContent = "";
+                actions.style.width = "65%";
+                description.style.width = "35%";
+
+                ataques();
+            }
+
+
         }
 
+    })
 
-    }
+};
 
-}) 
-
-function reconstrucao(){
+function reconstrucao() {
     container.style.display = "flex";
     actions.innerHTML = `
-    <p class="NameActions">FIGHT</p>
-    <p class="NameActions">BAG</p>
-    <p class="NameActions">POKÉMON</p>
-    <p class="NameActions">RUN</p>
-`;
+        <p class="NameActions">FIGHT</p>
+        <p class="NameActions">BAG</p>
+        <p class="NameActions">POKÉMON</p>
+        <p class="NameActions">RUN</p>
+    `;
     actions.style.display = "flex";
     actions.style.flexWrap = "nowrap";
     actions.style.width = "50%";
     description.style.width = "50%";
     description.innerHTML = "";
+
+    return;
 }
 
-function ataques(){
+function ataques() {
 
-    moves.charmander.forEach(element => {
+    movesFire.charmander.forEach(element => {
         const divs = document.createElement("div");
         divs.classList.add("divs");
         divs.textContent = element.name;
@@ -114,104 +121,161 @@ let HPEnemy = pokemonInimigo.statsReais.HP;
 const HPMaxEnemy = HPEnemy;
 let HPPlayer = pokemonJogador.statsReais.HP;
 const HPMaxPlayer = HPPlayer;
+const filaDeTurnos = [];
 
+function actionShift() {
+    if (filaDeTurnos.length > 0) {
+        const currentTurn = filaDeTurnos.shift();
+        currentTurn();
+    }
+}
 
 actions.addEventListener("click", e => {
-    if(e.target.classList.contains("divs")){
+    if (e.target.classList.contains("divs")) {
 
         const text = e.target.textContent;
         const ataque = movesFire.charmander.find(e => e.name === text);
-        const damage = Number(ataque.power);
-        HPEnemy -= damage;
-        if(HPEnemy <= 0){
-            HPEnemy = 0;
-        }
-        
-        description.style.width = "100%";
-        actions.style.display = "none";
-        attacksDescriptionPlayer(ataque.name,pokemonJogador.nome);
 
-        setTimeout(() => { /* Sem isso, o mesmo clique que ativou o golpe também dispararia esse listener, pulando a espera por um novo clique do jogador */
-            document.addEventListener("click", e => {
+        if (pokemonJogador.statsReais.Speed > pokemonInimigo.statsReais.Speed) {
+            filaDeTurnos.push(() => ShiftPlayer(ataque));
+            filaDeTurnos.push(enemyAttack);
+        } else {
+            filaDeTurnos.push(enemyAttack);
+            filaDeTurnos.push(() => ShiftPlayer(ataque));
+        }
+
+        filaDeTurnos.push(reconstrucao);
+
+        actionShift();
+    }
+});
+
+function ShiftPlayer(ataque) {
+    const damage = Number(ataque.power);
+
+    if (ataque.CategoryKey === "Special") {
+        const SpA = SpAttackP(damage, ataque);
+        HPEnemy -= SpA;
+        if (HPEnemy <= 0) HPEnemy = 0;
+    }
+
+    if (ataque.CategoryKey === "Physical") {
+        const AP = AttackP(damage, ataque);
+        HPEnemy -= AP;
+        if (HPEnemy <= 0) HPEnemy = 0;
+    }
+
+    description.style.width = "100%";
+    actions.style.display = "none";
+    attacksDescriptionPlayer(ataque.name, pokemonJogador.nome);
+
+    setTimeout(() => {
+        document.addEventListener("click", e => {
 
             const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
             HPDiv[0].style.width = porcentagem + "%";
             container.style.display = "none";
 
-            setTimeout(() => {
-                if(HPEnemy === 0){
+            if (HPEnemy === 0) {
+                filaDeTurnos.length = 0; // Cancela o resto do turno
+                setTimeout(() => {
                     gameOver();
                     window.location.reload();
-                }
-            }, 2000);
+                }, 1000);
+            } else {
+                actionShift(); // <--- DENTRO DO CLIQUE: Chama a próxima ação da fila
+            }
 
-                setTimeout(() => { 
-                    document.addEventListener("click", e => {
-            
-                        enemyAttack();
+        }, { once: true });
+    }, 0);
+    
+    // Removido o actionShift() solto aqui!
+}
 
-                    }, { once: true });
-                }, 0);
-
-            }, { once: true });
-        }, 0);
-
-        
-    }
-})
-
-function enemyAttack(){
+function enemyAttack() {
     const stats = pokemonInimigo;
     const Attacks = movesFire.charmander;
     const indiceAleatorio = Math.floor(Math.random() * Attacks.length);
     const ataqueAleatorio = Attacks[indiceAleatorio];
-
     const power = Number(ataqueAleatorio.power);
-    HPPlayer -= power;
-    if(HPPlayer <= 0 ){
-        HPPlayer = 0;
+
+    if (ataqueAleatorio.CategoryKey === "Special") {
+        const SpA = SpAttackE(power, ataqueAleatorio);
+        HPPlayer -= SpA;
+        if (HPPlayer <= 0) HPPlayer = 0;
+    }
+
+    if (ataqueAleatorio.CategoryKey === "Physical") {
+        const AP = AttackE(power, ataqueAleatorio);
+        HPPlayer -= AP;
+        if (HPPlayer <= 0) HPPlayer = 0;
     }
 
     container.style.display = "flex";
-    attacksDescriptionEnemy(ataqueAleatorio.name,stats.nome);
+    attacksDescriptionEnemy(ataqueAleatorio.name, stats.nome);
 
-    setTimeout(() => { /* Sem isso, o mesmo clique que ativou o golpe também dispararia esse listener, pulando a espera por um novo clique do jogador */
+    setTimeout(() => {
         document.addEventListener("click", e => {
 
             const porcentagem = (HPPlayer / HPMaxPlayer) * 100;
             HPDiv[1].style.width = porcentagem + "%";
             container.style.display = "none";
 
-            setTimeout(() => {
-                if(HPPlayer === 0){
+            if (HPPlayer === 0) {
+                filaDeTurnos.length = 0; // Cancela o resto do turno
+                setTimeout(() => {
                     gameOver();
                     window.location.reload();
-                }
-            }, 2000)
-
-                setTimeout(() => { 
-                    document.addEventListener("click", e => {
-                    
-                        reconstrucao();
-                        return;
-
-                    }, { once: true });
-                }, 0);
+                }, 1000);
+            } else {
+                actionShift(); // <--- DENTRO DO CLIQUE: Chama a próxima ação da fila
+            }
 
         }, { once: true });
     }, 0);
 
+    // Removido o actionShift() solto aqui!
 }
-
-function gameOver(){
+function gameOver() {
     window.alert("Fim de jogo");
 };
 
-function attacksDescriptionPlayer(nameAttack,namePokemon){
+function attacksDescriptionPlayer(nameAttack, namePokemon) {
     description.textContent = namePokemon + " usou " + nameAttack;
 
 };
 
-function attacksDescriptionEnemy(nameAttack,namePokemon){
+function attacksDescriptionEnemy(nameAttack, namePokemon) {
     description.textContent = namePokemon + " usou " + nameAttack;
+}
+
+
+
+/* ====================== Ataques com calculos ============================ */
+function SpAttackP(damage, ataque) {
+    if (ataque.CategoryKey === "Special") {
+        return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.SpAttack / pokemonInimigo.statsReais.SpDefense)) / 50) + 2;
+    }
+
+}
+
+function AttackP(damage, ataque) {
+    if (ataque.CategoryKey === "Physical") {
+        return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.Attack / pokemonInimigo.statsReais.Defense)) / 50) + 2;
+    }
+
+}
+
+function SpAttackE(damage, ataque) {
+    if (ataque.CategoryKey === "Special") {
+        return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonInimigo.statsReais.SpAttack / pokemonJogador.statsReais.SpDefense)) / 50) + 2;
+    }
+
+}
+
+function AttackE(damage, ataque) {
+    if (ataque.CategoryKey === "Physical") {
+        return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonInimigo.statsReais.Attack / pokemonJogador.statsReais.Defense)) / 50) + 2;
+    }
+
 }
