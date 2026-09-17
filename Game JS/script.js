@@ -5,6 +5,8 @@ const actions = document.querySelector(".functions");
 const container = document.querySelector(".actions");
 const description = document.querySelector(".detalhes");
 
+startBattle();
+
 function startBattle() {
 
     actions.addEventListener("click", e => {
@@ -56,7 +58,7 @@ function ataques() {
     actions.style.flexWrap = "wrap";
 }
 
-// IVs pokemon
+/* =================================== IVs pokemon ============================================== */
 const names = document.querySelectorAll(".name");
 const nameInimigo = names[0].textContent;
 const namePlayer = names[1].textContent;
@@ -67,11 +69,43 @@ const lvPlayer = Number(lv[1].textContent);
 
 const DexEnemy = pokedex.find(e => e.nome === nameInimigo);
 const DexPlayer = pokedex.find(e => e.nome === namePlayer);
+const typeEffectivenessEnemy = DexEnemy.typeEffectiveness;
+const typeEffectivenessPlayer = DexPlayer.typeEffectiveness;
+const typeEnemy = DexEnemy.type;
+const typePlayer = DexPlayer.type;
+
+if (typePlayer) { 
+
+    for (let tipo in typeEffectivenessPlayer) {
+
+        if (tipo === typeEnemy) {
+            console.log("ok");
+        } else {
+            console.log("não")
+        }
+    }
+
+}
+
+if (typeEnemy) {
+
+    for (let tipo in typeEffectivenessEnemy) {
+
+        if (tipo === typePlayer) {
+            console.log("ok");
+        } else {
+            console.log("não")
+        }
+    }
+
+}
+
 const baseEnemy = DexEnemy.stats;
 const basePlayer = DexPlayer.stats;
 
 const pokemonInimigo = criarPokemon(nameInimigo, baseEnemy, lvInimigo);
 const pokemonJogador = criarPokemon(namePlayer, basePlayer, lvPlayer);
+
 
 function gerarIV() {
     return Math.floor(Math.random() * 32); // 0 a 31
@@ -115,7 +149,8 @@ function criarPokemon(nome, base, nivel) {
     };
 }
 
-// Dano
+
+/* ============================== Battle ============================ */
 let HPDiv = document.querySelectorAll(".hp");
 let HPEnemy = pokemonInimigo.statsReais.HP;
 const HPMaxEnemy = HPEnemy;
@@ -177,19 +212,25 @@ function ShiftPlayer(ataque) {
             container.style.display = "none";
 
             if (HPEnemy === 0) {
-                filaDeTurnos.length = 0; // Cancela o resto do turno
+                filaDeTurnos.length = 0;
                 setTimeout(() => {
                     gameOver();
                     window.location.reload();
                 }, 1000);
             } else {
-                actionShift(); // <--- DENTRO DO CLIQUE: Chama a próxima ação da fila
+                setTimeout(() => {
+                    document.addEventListener("click", e => {
+
+                        actionShift();
+                        container.style.display = "flex";
+
+                    }, { once: true });
+                }, 0);
             }
 
         }, { once: true });
     }, 0);
-    
-    // Removido o actionShift() solto aqui!
+
 }
 
 function enemyAttack() {
@@ -211,7 +252,8 @@ function enemyAttack() {
         if (HPPlayer <= 0) HPPlayer = 0;
     }
 
-    container.style.display = "flex";
+    description.style.width = "100%";
+    actions.style.display = "none";
     attacksDescriptionEnemy(ataqueAleatorio.name, stats.nome);
 
     setTimeout(() => {
@@ -222,26 +264,35 @@ function enemyAttack() {
             container.style.display = "none";
 
             if (HPPlayer === 0) {
-                filaDeTurnos.length = 0; // Cancela o resto do turno
+                filaDeTurnos.length = 0;
                 setTimeout(() => {
                     gameOver();
                     window.location.reload();
                 }, 1000);
             } else {
-                actionShift(); // <--- DENTRO DO CLIQUE: Chama a próxima ação da fila
+                setTimeout(() => {
+                    document.addEventListener("click", e => {
+
+                        actionShift();
+                        container.style.display = "flex";
+
+                    }, { once: true });
+                }, 0);
             }
 
         }, { once: true });
     }, 0);
 
-    // Removido o actionShift() solto aqui!
+
 }
+
 function gameOver() {
     window.alert("Fim de jogo");
 };
 
 function attacksDescriptionPlayer(nameAttack, namePokemon) {
     description.textContent = namePokemon + " usou " + nameAttack;
+
 
 };
 
@@ -268,14 +319,14 @@ function AttackP(damage, ataque) {
 
 function SpAttackE(damage, ataque) {
     if (ataque.CategoryKey === "Special") {
-        return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonInimigo.statsReais.SpAttack / pokemonJogador.statsReais.SpDefense)) / 50) + 2;
+        return ((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.SpAttack / pokemonJogador.statsReais.SpDefense)) / 50) + 2;
     }
 
 }
 
 function AttackE(damage, ataque) {
     if (ataque.CategoryKey === "Physical") {
-        return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonInimigo.statsReais.Attack / pokemonJogador.statsReais.Defense)) / 50) + 2;
+        return ((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.Attack / pokemonJogador.statsReais.Defense)) / 50) + 2;
     }
 
 }
