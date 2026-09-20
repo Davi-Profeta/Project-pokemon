@@ -47,7 +47,7 @@ function reconstrucao() {
 
 function ataques() {
 
-    movesFire.charmander.forEach(element => {
+    movesP.forEach(element => {
         const divs = document.createElement("div");
         divs.classList.add("divs");
         divs.textContent = element.name;
@@ -73,32 +73,41 @@ const typeEffectivenessEnemy = DexEnemy.typeEffectiveness;
 const typeEffectivenessPlayer = DexPlayer.typeEffectiveness;
 const typeEnemy = DexEnemy.type;
 const typePlayer = DexPlayer.type;
+let x2P = false;
+let x2E = false;
 
-if (typePlayer) { 
+function efetivo(){
+
+    if (typePlayer) { 
 
     for (let tipo in typeEffectivenessPlayer) {
 
-        if (tipo === typeEnemy) {
-            console.log("ok");
-        } else {
-            console.log("não")
+        for(let i=0; i<movesP; i++){
+            console.log(i);
         }
+
+        if (tipo === typeEnemy && tipo === 2) {
+            x2P = true;
+        } 
+
+    }
+
+    }
+
+    if (typeEnemy) {
+
+        for (let tipo in typeEffectivenessEnemy) {
+
+            if (tipo === typePlayer && tipo === 2) {
+                x2E = true;
+            } 
+
+        }
+
     }
 
 }
 
-if (typeEnemy) {
-
-    for (let tipo in typeEffectivenessEnemy) {
-
-        if (tipo === typePlayer) {
-            console.log("ok");
-        } else {
-            console.log("não")
-        }
-    }
-
-}
 
 const baseEnemy = DexEnemy.stats;
 const basePlayer = DexPlayer.stats;
@@ -168,8 +177,10 @@ function actionShift() {
 actions.addEventListener("click", e => {
     if (e.target.classList.contains("divs")) {
 
+        efetivo();
+
         const text = e.target.textContent;
-        const ataque = movesFire.charmander.find(e => e.name === text);
+        const ataque = movesP.find(e => e.name === text);
 
         if (pokemonJogador.statsReais.Speed > pokemonInimigo.statsReais.Speed) {
             filaDeTurnos.push(() => ShiftPlayer(ataque));
@@ -207,26 +218,61 @@ function ShiftPlayer(ataque) {
     setTimeout(() => {
         document.addEventListener("click", e => {
 
-            const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
-            HPDiv[0].style.width = porcentagem + "%";
-            container.style.display = "none";
+            if(x2P === true){
+                description.textContent = "É super eficaz";
 
-            if (HPEnemy === 0) {
-                filaDeTurnos.length = 0;
                 setTimeout(() => {
-                    gameOver();
-                    window.location.reload();
-                }, 1000);
-            } else {
-                setTimeout(() => {
-                    document.addEventListener("click", e => {
+                document.addEventListener("click", e => {
 
-                        actionShift();
-                        container.style.display = "flex";
+                const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
+                HPDiv[0].style.width = porcentagem + "%";
+                container.style.display = "none";
+
+                if (HPEnemy === 0) {
+                        ilaDeTurnos.length = 0;
+                    setTimeout(() => {
+                        gameOver();
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        document.addEventListener("click", e => {
+
+                            actionShift();
+                            container.style.display = "flex";
+
+                            }, { once: true });
+                        }, 0);
+                    }
 
                     }, { once: true });
                 }, 0);
+
+            } else {
+
+                const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
+                HPDiv[0].style.width = porcentagem + "%";
+                container.style.display = "none";
+
+                if (HPEnemy === 0) {
+                        filaDeTurnos.length = 0;
+                    setTimeout(() => {
+                        gameOver();
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        document.addEventListener("click", e => {
+
+                            actionShift();
+                            container.style.display = "flex";
+
+                            }, { once: true });
+                    }, 0);
+                }
+
             }
+
 
         }, { once: true });
     }, 0);
@@ -235,7 +281,7 @@ function ShiftPlayer(ataque) {
 
 function enemyAttack() {
     const stats = pokemonInimigo;
-    const Attacks = movesFire.charmander;
+    const Attacks = movesGhost.Gengar;
     const indiceAleatorio = Math.floor(Math.random() * Attacks.length);
     const ataqueAleatorio = Attacks[indiceAleatorio];
     const power = Number(ataqueAleatorio.power);
@@ -259,26 +305,61 @@ function enemyAttack() {
     setTimeout(() => {
         document.addEventListener("click", e => {
 
-            const porcentagem = (HPPlayer / HPMaxPlayer) * 100;
-            HPDiv[1].style.width = porcentagem + "%";
-            container.style.display = "none";
 
-            if (HPPlayer === 0) {
-                filaDeTurnos.length = 0;
-                setTimeout(() => {
-                    gameOver();
-                    window.location.reload();
-                }, 1000);
-            } else {
+            if(x2E === true){
+                description.textContent = "É super eficaz";
+
                 setTimeout(() => {
                     document.addEventListener("click", e => {
 
-                        actionShift();
-                        container.style.display = "flex";
+                        const porcentagem = (HPPlayer / HPMaxPlayer) * 100;
+                        HPDiv[1].style.width = porcentagem + "%";
+                        container.style.display = "none";
+
+                        if (HPPlayer === 0) {
+                            filaDeTurnos.length = 0;
+                            setTimeout(() => {
+                                gameOver();
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            setTimeout(() => {
+                                document.addEventListener("click", e => {
+
+                                    actionShift();
+                                    container.style.display = "flex";
+
+                                }, { once: true });
+                            }, 0);
+                        }
 
                     }, { once: true });
                 }, 0);
+            } else {
+
+                const porcentagem = (HPPlayer / HPMaxPlayer) * 100;
+                HPDiv[1].style.width = porcentagem + "%";
+                container.style.display = "none";
+
+                if (HPPlayer === 0) {
+                    filaDeTurnos.length = 0;
+                    setTimeout(() => {
+                        gameOver();
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        document.addEventListener("click", e => {
+
+                            actionShift();
+                            container.style.display = "flex";
+
+                        }, { once: true });
+                    }, 0);
+                }
+
             }
+
 
         }, { once: true });
     }, 0);
@@ -304,28 +385,37 @@ function attacksDescriptionEnemy(nameAttack, namePokemon) {
 
 /* ====================== Ataques com calculos ============================ */
 function SpAttackP(damage, ataque) {
-    if (ataque.CategoryKey === "Special") {
+    if (ataque.CategoryKey === "Special" && x2P === true) {
+        return (((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.SpAttack / pokemonInimigo.statsReais.SpDefense)) / 50) + 2) * 2;
+    } else if (ataque.CategoryKey === "Special"){
+        console.log("foi");
         return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.SpAttack / pokemonInimigo.statsReais.SpDefense)) / 50) + 2;
     }
 
 }
 
 function AttackP(damage, ataque) {
-    if (ataque.CategoryKey === "Physical") {
+    if (ataque.CategoryKey === "Physical" && x2P === true) {
+        return (((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.Attack / pokemonInimigo.statsReais.Defense)) / 50) + 2) * 2;
+    } else if (ataque.CategoryKey === "Physical") {
         return ((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.Attack / pokemonInimigo.statsReais.Defense)) / 50) + 2;
     }
 
 }
 
 function SpAttackE(damage, ataque) {
-    if (ataque.CategoryKey === "Special") {
+    if (ataque.CategoryKey === "Special" && x2E === true) {
+        return (((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.SpAttack / pokemonJogador.statsReais.SpDefense)) / 50) + 2) *2;
+    } else if (ataque.CategoryKey === "Special") {
         return ((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.SpAttack / pokemonJogador.statsReais.SpDefense)) / 50) + 2;
     }
 
 }
 
 function AttackE(damage, ataque) {
-    if (ataque.CategoryKey === "Physical") {
+    if (ataque.CategoryKey === "Physical" && x2E === true) {
+        return (((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.Attack / pokemonJogador.statsReais.Defense)) / 50) + 2) * 2;
+    } else if (ataque.CategoryKey === "Physical") {
         return ((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.Attack / pokemonJogador.statsReais.Defense)) / 50) + 2;
     }
 
