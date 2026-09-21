@@ -69,39 +69,29 @@ const lvPlayer = Number(lv[1].textContent);
 
 const DexEnemy = pokedex.find(e => e.nome === nameInimigo);
 const DexPlayer = pokedex.find(e => e.nome === namePlayer);
-const typeEffectivenessEnemy = DexEnemy.typeEffectiveness;
-const typeEffectivenessPlayer = DexPlayer.typeEffectiveness;
 const typeEnemy = DexEnemy.type;
 const typePlayer = DexPlayer.type;
 let x2P = false;
 let x2E = false;
 
-function efetivo(){
+function efetivo(type){
 
     if (typePlayer) { 
 
-    for (let tipo in typeEffectivenessPlayer) {
+        const efetivo = typeChart[type]?.[typeEnemy]
 
-        for(let i=0; i<movesP; i++){
-            console.log(i);
+        if(efetivo === 2){
+            x2P = true;
         }
 
-        if (tipo === typeEnemy && tipo === 2) {
-            x2P = true;
-        } 
-
-    }
-
-    }
+    };
 
     if (typeEnemy) {
 
-        for (let tipo in typeEffectivenessEnemy) {
+        const efetivo = typeChart[type]?.[typePlayer]
 
-            if (tipo === typePlayer && tipo === 2) {
-                x2E = true;
-            } 
-
+        if(efetivo === 2){
+            x2E = true;
         }
 
     }
@@ -177,10 +167,11 @@ function actionShift() {
 actions.addEventListener("click", e => {
     if (e.target.classList.contains("divs")) {
 
-        efetivo();
-
         const text = e.target.textContent;
         const ataque = movesP.find(e => e.name === text);
+        const x2 = ataque.type;
+        
+        efetivo(x2);
 
         if (pokemonJogador.statsReais.Speed > pokemonInimigo.statsReais.Speed) {
             filaDeTurnos.push(() => ShiftPlayer(ataque));
@@ -219,6 +210,7 @@ function ShiftPlayer(ataque) {
         document.addEventListener("click", e => {
 
             if(x2P === true){
+                console.log("Ok");
                 description.textContent = "É super eficaz";
 
                 setTimeout(() => {
@@ -229,7 +221,7 @@ function ShiftPlayer(ataque) {
                 container.style.display = "none";
 
                 if (HPEnemy === 0) {
-                        ilaDeTurnos.length = 0;
+                        filaDeTurnos.length = 0;
                     setTimeout(() => {
                         gameOver();
                         window.location.reload();
