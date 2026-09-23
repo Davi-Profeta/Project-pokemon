@@ -7,29 +7,32 @@ let movesP = "";
 
 select.addEventListener("click", e => {
 
-    if(e.target.classList.contains("Poke")){
-        const container = e.target;
-        const subDiv = container.querySelector(".descriptionPoke");
-        const namePoke = subDiv.querySelectorAll(".nameStart");
+    const container = e.target.closest(".Poke");
+    if (!container) return; // clicou fora de qualquer Poke
 
-        const criar = pokedex.find(e => e.nome === namePoke[0].textContent);
-        const href = criar.href;
-        movesP = criar.moves;
+    const subDiv = container.querySelector(".descriptionPoke");
+    const namePoke = subDiv.querySelectorAll(".nameStart");
 
-        const img = document.createElement("img");
-        img.src = href;
-        img.classList = "pokemonP";
+    const criar = pokedex.find(e => e.nome === namePoke[0].textContent);
+    const href = criar.href;
+    movesP = criar.moves;
 
-        playerSpace.innerHTML = ""; 
-        playerSpace.appendChild(img);
-        nameAtualizado[1].textContent = namePoke[0].textContent; 
+    const img = document.createElement("img");
+    img.src = href;
+    img.classList = "pokemonP";
 
-        
-        start.style.display = "none";
-        containerBattle.style.display = "block";
+    playerSpace.innerHTML = ""; 
+    playerSpace.appendChild(img);
+    nameAtualizado[1].textContent = namePoke[0].textContent; 
 
-        startBattle();
-        
-    }
+    start.style.display = "none";
+    containerBattle.style.display = "block";
 
+    const loading = document.querySelector(".loading-screen");
+
+    setTimeout(() => {
+        loading.style.display = "none";
+    }, 1000);
+
+    startBattle();
 });
