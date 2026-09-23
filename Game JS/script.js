@@ -183,6 +183,7 @@ actions.addEventListener("click", e => {
         const x2 = ataque.type;
         
         efetivoP(x2);
+        ModifierP();
 
         if (pokemonJogador.statsReais.Speed > pokemonInimigo.statsReais.Speed) {
             filaDeTurnos.push(() => ShiftPlayer(ataque));
@@ -224,11 +225,15 @@ function ShiftPlayer(ataque) {
 
                 let text = '';
 
-                if(x2P === 2){
+                if(modificadorP === 3){
+                    text = "É super eficaz e Critical Hit";
+                } else if(modificadorP === 2){
                     text = 'É super eficaz';
-                } else if (x2P === 0.5){
+                } else if (modificadorP === 1.5){
+                    text = 'Critical Hit';
+                } else if (modificadorP === 0.5){
                     text = 'Não é mutio eficaz'
-                } else if (x2P === 0){
+                } else if (modificadorP === 0){
                     text = 'Não teve efeito';
                 };
 
@@ -301,6 +306,7 @@ function enemyAttack() {
     const x2 = ataqueAleatorio.type;
 
     efetivoE(x2);
+    ModifierE();
 
     if (ataqueAleatorio.CategoryKey === "Special") {
         const SpA = SpAttackE(power, ataqueAleatorio);
@@ -325,11 +331,15 @@ function enemyAttack() {
 
                 let text = '';
 
-                if(x2E === 2){
+                if(modificadorE === 3){
+                    text = "É super eficaz e Critical Hit";
+                } else if(modificadorE === 2){
                     text = 'É super eficaz';
-                } else if (x2E === 0.5){
+                } else if (modificadorE === 1.5){
+                    text = 'Critical Hit';
+                } else if (modificadorE === 0.5){
                     text = 'Não é mutio eficaz'
-                } else if (x2E === 0){
+                } else if (modificadorE === 0){
                     text = 'Não teve efeito';
                 };
 
@@ -410,31 +420,63 @@ function attacksDescriptionEnemy(nameAttack, namePokemon) {
 
 
 /* ====================== Ataques com calculos ============================ */
+let modificadorP = 0;
+let modificadorE = 0;
+
+function critical(){
+    return Math.random() < (1 / 24); // A função compara um número entre 0 e 1, se for menor que 0.04167, é critico
+};
+
+function ModifierP(){
+    
+    modificadorP = x2P;
+    const criticalHit = critical();
+
+    if(criticalHit === true){
+        modificadorP = x2P * 1.5;
+    };
+
+    console.log(modificadorP);
+};
+
+function ModifierE(){
+
+    modificadorE = x2E;
+    const criticalHit = critical();
+
+    if(criticalHit === true){
+        modificadorE = x2E * 1.5;
+    };
+
+    console.log(modificadorE);
+}
+
+
 function SpAttackP(damage, ataque) {
 
     if (ataque.CategoryKey === "Special") {
-        return (((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.SpAttack / pokemonInimigo.statsReais.SpDefense)) / 50) + 2) * x2P;
+        return (((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.SpAttack / pokemonInimigo.statsReais.SpDefense)) / 50) + 2) * modificadorP;
     };
 
 }
 
 function AttackP(damage, ataque) {
     if (ataque.CategoryKey === "Physical") {
-        return (((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.Attack / pokemonInimigo.statsReais.Defense)) / 50) + 2) * x2P;
+        return (((((2 * lvPlayer / 5) + 2) * damage * (pokemonJogador.statsReais.Attack / pokemonInimigo.statsReais.Defense)) / 50) + 2) * modificadorP;
     };
 
 }
 
 function SpAttackE(damage, ataque) {
     if (ataque.CategoryKey === "Special") {
-        return (((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.SpAttack / pokemonJogador.statsReais.SpDefense)) / 50) + 2) * x2E;
+        return (((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.SpAttack / pokemonJogador.statsReais.SpDefense)) / 50) + 2) * modificadorE;
     };
 
 }
 
 function AttackE(damage, ataque) {
     if (ataque.CategoryKey === "Physical") {
-        return (((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.Attack / pokemonJogador.statsReais.Defense)) / 50) + 2) * x2E;
+        return (((((2 * lvInimigo / 5) + 2) * damage * (pokemonInimigo.statsReais.Attack / pokemonJogador.statsReais.Defense)) / 50) + 2) * modificadorE;
     };
 
 }
