@@ -110,8 +110,102 @@ html, body{
 }
 
 .individual{
-    width: 8rem;
-    height: 7rem;
+    height: 10rem;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* ============================= MODAL Choose =========================================== */
+.chooseMoves{
+    display: none;
+    margin: auto;
+    width: 90vw;
+    height: 80vh;
+    border: solid 5px black;
+    border-radius: 20px;
+    padding: 0.5rem;
+    background-color: #121212;
+}
+
+.corpoMoves{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.titlePoke{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    height: 10%;
+    border: solid #444 2px;
+    width: 100%;
+    flex: 1;
+    color: aliceblue;
+}
+
+.setMoves{
+    display: flex;
+    height: 90%;
+}
+
+.abaPoke{
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    border: solid #444 2px;
+}
+
+.move{
+    width: 60%;
+    border: solid #444 2px;
+}
+
+.choose{
+    height: 85%;
+    width: 100%;
+}
+
+.selectYou{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 25%;
+    border: solid 2px black;
+}
+
+.escolha{
+    width: 80%;
+}
+
+.titulo{
+    width: 100%;
+    height: 30%;
+    border: solid 2px black;
+}
+
+.next{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 15%;
+    border: solid 2px black;
+}
+
+#gifStart{
+    width: 80%; 
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+img {
+    image-rendering: pixelated;  /* Recomendado para Chrome, Firefox, Edge */
+    image-rendering: -moz-pixelated; /* Antigo Firefox */
+    
+    /* Importante: Garanta que a imagem não seja esticada para tamanhos quebrados */
+    /* Use resoluções que sejam múltiplos inteiros da imagem original (x2, x3, etc.) */
 }
 
 /* Animação do Spinner estilo Pokébola ou Simples */

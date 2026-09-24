@@ -1,14 +1,13 @@
 
 // Script Actions
-const environment = document.querySelector("environment");
+const environment = document.querySelector(".environment");
 const actions = document.querySelector(".functions");
 const container = document.querySelector(".actions");
 const description = document.querySelector(".detalhes");
 
-startBattle();
 
 function startBattle() {
-
+    console.log("ok")
     actions.addEventListener("click", e => {
         if (e.target.classList.contains("NameActions")) {
             const btn = e.target;
@@ -56,108 +55,114 @@ function ataques() {
     });
 
     actions.style.flexWrap = "wrap";
+    createPoke();
 }
 
 /* =================================== IVs pokemon ============================================== */
-const names = document.querySelectorAll(".name");
-const nameInimigo = names[0].textContent;
-const namePlayer = names[1].textContent;
+function createPoke(){
 
-const lv = document.querySelectorAll(".nivel");
-const lvInimigo = Number(lv[0].textContent);
-const lvPlayer = Number(lv[1].textContent);
+    const names = document.querySelectorAll(".name");
+    const nameInimigo = names[0].textContent;
+    const namePlayer = names[1].textContent;
 
-const DexEnemy = pokedex.find(e => e.nome === nameInimigo);
-const DexPlayer = pokedex.find(e => e.nome === namePlayer);
-const typeEnemy = DexEnemy.type;
-const typePlayer = DexPlayer.type;
-let x2P = 1;
-let x2E = 1;
+    const lv = document.querySelectorAll(".nivel");
+    const lvInimigo = Number(lv[0].textContent);
+    const lvPlayer = Number(lv[1].textContent);
 
-function efetivoP(type){
+    const DexEnemy = pokedex.find(e => e.nome === nameInimigo);
+    const DexPlayer = pokedex.find(e => e.nome === namePlayer);
+    const typeEnemy = DexEnemy.type;
+    const typePlayer = DexPlayer.type;
+    let x2P = 1;
+    let x2E = 1;
 
-    if (typePlayer) { 
+    function efetivoP(type){
 
-        const efetivo = typeChart[type]?.[typeEnemy]
+        if (typePlayer) { 
 
-        if(efetivo === 2){
-            x2P = 2;
-        } else if (efetivo === 0.5){
-            x2P = 0.5;
-        } else if (efetivo === 0){
-            x2P = 0;
-        };
+            const efetivo = typeChart[type]?.[typeEnemy]
 
-    }; 
+            if(efetivo === 2){
+                x2P = 2;
+            } else if (efetivo === 0.5){
+                x2P = 0.5;
+            } else if (efetivo === 0){
+                x2P = 0;
+            };
 
-};
+        }; 
 
-function efetivoE(type){
-
-    if (typeEnemy) {
-
-        const efetivoE = typeChart[type]?.[typePlayer]
-
-        if(efetivoE === 2){
-            x2E = 2;
-        } else if (efetivoE === 0.5){
-            x2E = 0.5;
-        } else if (efetivoE === 0){
-            x2E = 0;
-        };
-
-    }
-};
-
-
-const baseEnemy = DexEnemy.stats;
-const basePlayer = DexPlayer.stats;
-
-const pokemonInimigo = criarPokemon(nameInimigo, baseEnemy, lvInimigo);
-const pokemonJogador = criarPokemon(namePlayer, basePlayer, lvPlayer);
-
-
-function gerarIV() {
-    return Math.floor(Math.random() * 32); // 0 a 31
-};
-
-function gerarIVs() {
-    return {
-        HP: gerarIV(),
-        Attack: gerarIV(),
-        Defense: gerarIV(),
-        SpAttack: gerarIV(),
-        SpDefense: gerarIV(),
-        Speed: gerarIV()
     };
-}
 
-function calcularHP(base, iv, nivel) {
-    return Math.floor(((2 * base + iv) * nivel) / 100) + nivel + 10;
-}
+    function efetivoE(type){
 
-function calcularStat(base, iv, nivel) {
-    return Math.floor(((2 * base + iv) * nivel) / 100) + 5;
-}
+        if (typeEnemy) {
 
-function criarPokemon(nome, base, nivel) {
-    const ivs = gerarIVs();
+            const efetivoE = typeChart[type]?.[typePlayer]
 
-    return {
-        nome,
-        nivel,
-        base,
-        ivs,
-        statsReais: {
-            HP: calcularHP(base.HP, ivs.HP, nivel),
-            Attack: calcularStat(base.Attack, ivs.Attack, nivel),
-            Defense: calcularStat(base.Defense, ivs.Defense, nivel),
-            SpAttack: calcularStat(base.SpAttack, ivs.SpAttack, nivel),
-            SpDefense: calcularStat(base.SpDefense, ivs.SpDefense, nivel),
-            Speed: calcularStat(base.Speed, ivs.Speed, nivel)
+            if(efetivoE === 2){
+                x2E = 2;
+            } else if (efetivoE === 0.5){
+                x2E = 0.5;
+            } else if (efetivoE === 0){
+                x2E = 0;
+            };
+
         }
     };
-}
+
+
+    const baseEnemy = DexEnemy.stats;
+    const basePlayer = DexPlayer.stats;
+
+    const pokemonInimigo = criarPokemon(nameInimigo, baseEnemy, lvInimigo);
+    const pokemonJogador = criarPokemon(namePlayer, basePlayer, lvPlayer);
+    console.log(pokemonJogador);
+
+
+    function gerarIV() {
+        return Math.floor(Math.random() * 32); // 0 a 31
+    };
+
+    function gerarIVs() {
+        return {
+            HP: gerarIV(),
+            Attack: gerarIV(),
+            Defense: gerarIV(),
+            SpAttack: gerarIV(),
+            SpDefense: gerarIV(),
+            Speed: gerarIV()
+        };
+    }
+
+    function calcularHP(base, iv, nivel) {
+        return Math.floor(((2 * base + iv) * nivel) / 100) + nivel + 10;
+    }
+
+    function calcularStat(base, iv, nivel) {
+        return Math.floor(((2 * base + iv) * nivel) / 100) + 5;
+    }
+
+    function criarPokemon(nome, base, nivel) {
+        const ivs = gerarIVs();
+
+        return {
+            nome,
+            nivel,
+            base,
+            ivs,
+            statsReais: {
+                HP: calcularHP(base.HP, ivs.HP, nivel),
+                Attack: calcularStat(base.Attack, ivs.Attack, nivel),
+                Defense: calcularStat(base.Defense, ivs.Defense, nivel),
+                SpAttack: calcularStat(base.SpAttack, ivs.SpAttack, nivel),
+                SpDefense: calcularStat(base.SpDefense, ivs.SpDefense, nivel),
+                Speed: calcularStat(base.Speed, ivs.Speed, nivel)
+            }
+        };
+    }
+
+};
 
 
 /* ============================== Battle ============================ */
