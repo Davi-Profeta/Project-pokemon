@@ -152,6 +152,7 @@ html, body{
 
 .abaPoke{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     width: 40%;
     border: solid #444 2px;
@@ -193,12 +194,43 @@ html, body{
     border: solid 2px black;
 }
 
+.pokeFix{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85%;
+    width: 100%;
+    border: solid 2px black;
+}
+
+.typeFix{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: solid black 2px;
+    height: 15%;
+}
+
+.typeNum{
+    border: solid black 3px;
+    border-radius: 10px;
+    width: 30%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 #gifStart{
     width: 80%; 
-    height: auto;
+    height: 100%;
     object-fit: contain;
     filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
 }
+
+
 
 img {
     image-rendering: pixelated;  /* Recomendado para Chrome, Firefox, Edge */
