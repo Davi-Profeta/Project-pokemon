@@ -5,6 +5,15 @@ const actions = document.querySelector(".functions");
 const container = document.querySelector(".actions");
 const description = document.querySelector(".detalhes");
 
+// Estado da batalha 
+let pokemonInimigo, pokemonJogador;
+let lvInimigo, lvPlayer;
+let typeEnemy, typePlayer;
+let x2P = 1, x2E = 1;
+let HPDiv, HPEnemy, HPMaxEnemy, HPPlayer, HPMaxPlayer;
+const filaDeTurnos = [];
+
+createPoke();
 
 function startBattle() {
     console.log("ok")
@@ -55,70 +64,37 @@ function ataques() {
     });
 
     actions.style.flexWrap = "wrap";
-    createPoke();
+
 }
 
 /* =================================== IVs pokemon ============================================== */
-function createPoke(){
+function createPoke() {
 
     const names = document.querySelectorAll(".name");
     const nameInimigo = names[0].textContent;
     const namePlayer = names[1].textContent;
 
     const lv = document.querySelectorAll(".nivel");
-    const lvInimigo = Number(lv[0].textContent);
-    const lvPlayer = Number(lv[1].textContent);
+    lvInimigo = Number(lv[0].textContent);
+    lvPlayer = Number(lv[1].textContent);
 
     const DexEnemy = pokedex.find(e => e.nome === nameInimigo);
     const DexPlayer = pokedex.find(e => e.nome === namePlayer);
-    const typeEnemy = DexEnemy.type;
-    const typePlayer = DexPlayer.type;
-    let x2P = 1;
-    let x2E = 1;
-
-    function efetivoP(type){
-
-        if (typePlayer) { 
-
-            const efetivo = typeChart[type]?.[typeEnemy]
-
-            if(efetivo === 2){
-                x2P = 2;
-            } else if (efetivo === 0.5){
-                x2P = 0.5;
-            } else if (efetivo === 0){
-                x2P = 0;
-            };
-
-        }; 
-
-    };
-
-    function efetivoE(type){
-
-        if (typeEnemy) {
-
-            const efetivoE = typeChart[type]?.[typePlayer]
-
-            if(efetivoE === 2){
-                x2E = 2;
-            } else if (efetivoE === 0.5){
-                x2E = 0.5;
-            } else if (efetivoE === 0){
-                x2E = 0;
-            };
-
-        }
-    };
-
+    typeEnemy = DexEnemy.type1;
+    typePlayer = DexPlayer.type1;
 
     const baseEnemy = DexEnemy.stats;
     const basePlayer = DexPlayer.stats;
 
-    const pokemonInimigo = criarPokemon(nameInimigo, baseEnemy, lvInimigo);
-    const pokemonJogador = criarPokemon(namePlayer, basePlayer, lvPlayer);
-    console.log(pokemonJogador);
+    pokemonInimigo = criarPokemon(nameInimigo, baseEnemy, lvInimigo);
+    pokemonJogador = criarPokemon(namePlayer, basePlayer, lvPlayer);
 
+    // é aqui que inicializa o HP:
+    HPDiv = document.querySelectorAll(".hp");
+    HPEnemy = pokemonInimigo.statsReais.HP;
+    HPMaxEnemy = HPEnemy;
+    HPPlayer = pokemonJogador.statsReais.HP;
+    HPMaxPlayer = HPPlayer;
 
     function gerarIV() {
         return Math.floor(Math.random() * 32); // 0 a 31
@@ -164,14 +140,43 @@ function createPoke(){
 
 };
 
+function efetivoP(type) {
+
+    if (typePlayer) {
+
+        const efetivo = typeChart[type]?.[typeEnemy]
+
+        if (efetivo === 2) {
+            x2P = 2;
+        } else if (efetivo === 0.5) {
+            x2P = 0.5;
+        } else if (efetivo === 0) {
+            x2P = 0;
+        };
+
+    };
+
+};
+
+function efetivoE(type) {
+
+    if (typeEnemy) {
+
+        const efetivoE = typeChart[type]?.[typePlayer]
+
+        if (efetivoE === 2) {
+            x2E = 2;
+        } else if (efetivoE === 0.5) {
+            x2E = 0.5;
+        } else if (efetivoE === 0) {
+            x2E = 0;
+        };
+
+    }
+};
+
 
 /* ============================== Battle ============================ */
-let HPDiv = document.querySelectorAll(".hp");
-let HPEnemy = pokemonInimigo.statsReais.HP;
-const HPMaxEnemy = HPEnemy;
-let HPPlayer = pokemonJogador.statsReais.HP;
-const HPMaxPlayer = HPPlayer;
-const filaDeTurnos = [];
 
 function actionShift() {
     if (filaDeTurnos.length > 0) {
@@ -186,7 +191,7 @@ actions.addEventListener("click", e => {
         const text = e.target.textContent;
         const ataque = movesP.find(e => e.name === text);
         const x2 = ataque.type;
-        
+
         efetivoP(x2);
         ModifierP();
 
@@ -210,13 +215,17 @@ function ShiftPlayer(ataque) {
     if (ataque.CategoryKey === "Special") {
         const SpA = SpAttackP(damage, ataque);
         HPEnemy -= SpA;
-        if (HPEnemy <= 0) HPEnemy = 0;
+        if (HPEnemy <= 0){
+            HPEnemy = 0;
+        } 
     }
 
     if (ataque.CategoryKey === "Physical") {
         const AP = AttackP(damage, ataque);
         HPEnemy -= AP;
-        if (HPEnemy <= 0) HPEnemy = 0;
+        if (HPEnemy <= 0) {
+            HPEnemy = 0;
+        }     
     }
 
     description.style.width = "100%";
@@ -226,47 +235,48 @@ function ShiftPlayer(ataque) {
     setTimeout(() => {
         document.addEventListener("click", e => {
 
-            if(x2P != 1 ){
+            if (x2P != 1) {
 
                 let text = '';
 
-                if(modificadorP === 3){
+                if (modificadorP === 3) {
                     text = "É super eficaz e Critical Hit";
-                } else if(modificadorP === 2){
+                } else if (modificadorP === 2) {
                     text = 'É super eficaz';
-                } else if (modificadorP === 1.5){
+                } else if (modificadorP === 1.5) {
                     text = 'Critical Hit';
-                } else if (modificadorP === 0.5){
+                } else if (modificadorP === 0.5) {
                     text = 'Não é mutio eficaz'
-                } else if (modificadorP === 0){
+                } else if (modificadorP === 0) {
                     text = 'Não teve efeito';
                 };
 
                 description.textContent = text;
 
                 setTimeout(() => {
-                document.addEventListener("click", e => {
+                    document.addEventListener("click", e => {
 
-                const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
-                HPDiv[0].style.width = porcentagem + "%";
-                container.style.display = "none";
+                        const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
+                        HPDiv[0].style.width = porcentagem + "%";
+                        container.style.display = "none";
 
-                if (HPEnemy === 0) {
-                        filaDeTurnos.length = 0;
-                    setTimeout(() => {
-                        gameOver();
-                        window.location.reload();
-                    }, 1000);
-                } else {
-                    setTimeout(() => {
-                        document.addEventListener("click", e => {
 
-                            actionShift();
-                            container.style.display = "flex";
+                        if (HPEnemy === 0) {
+                            filaDeTurnos.length = 0;
+                            setTimeout(() => {
+                                gameOver();
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            setTimeout(() => {
+                                document.addEventListener("click", e => {
 
-                            }, { once: true });
-                        }, 0);
-                    }
+                                    actionShift();
+                                    container.style.display = "flex";
+
+                                }, { once: true });
+                            }, 0);
+                        }
 
                     }, { once: true });
                 }, 0);
@@ -276,9 +286,10 @@ function ShiftPlayer(ataque) {
                 const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
                 HPDiv[0].style.width = porcentagem + "%";
                 container.style.display = "none";
+                console.log(HPEnemy);
 
                 if (HPEnemy === 0) {
-                        filaDeTurnos.length = 0;
+                    filaDeTurnos.length = 0;
                     setTimeout(() => {
                         gameOver();
                         window.location.reload();
@@ -290,7 +301,7 @@ function ShiftPlayer(ataque) {
                             actionShift();
                             container.style.display = "flex";
 
-                            }, { once: true });
+                        }, { once: true });
                     }, 0);
                 }
 
@@ -332,19 +343,19 @@ function enemyAttack() {
     setTimeout(() => {
         document.addEventListener("click", e => {
 
-            if(x2E != 1){
+            if (x2E != 1) {
 
                 let text = '';
 
-                if(modificadorE === 3){
+                if (modificadorE === 3) {
                     text = "É super eficaz e Critical Hit";
-                } else if(modificadorE === 2){
+                } else if (modificadorE === 2) {
                     text = 'É super eficaz';
-                } else if (modificadorE === 1.5){
+                } else if (modificadorE === 1.5) {
                     text = 'Critical Hit';
-                } else if (modificadorE === 0.5){
+                } else if (modificadorE === 0.5) {
                     text = 'Não é mutio eficaz'
-                } else if (modificadorE === 0){
+                } else if (modificadorE === 0) {
                     text = 'Não teve efeito';
                 };
 
@@ -428,28 +439,28 @@ function attacksDescriptionEnemy(nameAttack, namePokemon) {
 let modificadorP = 0;
 let modificadorE = 0;
 
-function critical(){
+function critical() {
     return Math.random() < (1 / 24); // A função compara um número entre 0 e 1, se for menor que 0.04167, é critico
 };
 
-function ModifierP(){
-    
+function ModifierP() {
+
     modificadorP = x2P;
     const criticalHit = critical();
 
-    if(criticalHit === true){
+    if (criticalHit === true) {
         modificadorP = x2P * 1.5;
     };
 
     console.log(modificadorP);
 };
 
-function ModifierE(){
+function ModifierE() {
 
     modificadorE = x2E;
     const criticalHit = critical();
 
-    if(criticalHit === true){
+    if (criticalHit === true) {
         modificadorE = x2E * 1.5;
     };
 
