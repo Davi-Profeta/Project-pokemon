@@ -91,7 +91,7 @@ select.addEventListener("click", e => {
         case "dragon": backType[0].style.backgroundColor = "#6F35FC"; typeOne.textContent = 'DRAGON'; break;
         case "steel": backType[0].style.backgroundColor = "#B7B7CE"; typeOne.textContent = 'STEEL'; break;
         case "fairy": backType[0].style.backgroundColor = "#D685AD"; typeOne.textContent = 'FAIRY'; break;
-        default: backType[0].style.backgroundColor = "#121212"; break;
+        default: backType[0].style.backgroundColor = "#121212"; typeOne.textContent = ''; break;
     };
 
     switch(element.type2){
@@ -112,7 +112,7 @@ select.addEventListener("click", e => {
         case "dragon": backType[1].style.backgroundColor = "#6F35FC"; typeTwo.textContent = 'DRAGON'; break;
         case "steel": backType[1].style.backgroundColor = "#B7B7CE"; typeTwo.textContent = 'STEEL'; break;
         case "fairy": backType[1].style.backgroundColor = "#D685AD"; typeTwo.textContent = 'FAIRY'; break;
-        default: backType[1].style.backgroundColor = "#121212"; break;
+        default: backType[1].style.backgroundColor = "#121212"; typeTwo.textContent = ''; break;
     };
 
 });
@@ -133,3 +133,20 @@ function criarPoke(){
     startBattle();
 
 };
+
+const btnMoves = document.querySelector(".choose");
+const dialogList = document.querySelector(".moveList");
+
+btnMoves.addEventListener("click", e => {
+
+    const container = e.target.closest(".skew-container");
+    if(!container) return;
+
+
+    console.log("ok");
+
+    dialogList.showModal();
+    dialogList.style.display = "flex";
+
+
+})
