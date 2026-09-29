@@ -279,22 +279,26 @@ html, body{
     align-items: center;
     border: solid red 2px;
     padding: 1rem;
-    overflow-y: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .skew{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     width: 95%;
     height: 20%;
     background-color: aliceblue;
-    color: #ffffff;
+    color: black;
+    font-size: 2rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     padding: 12px 25px;
     transform: skewX(-20deg); /* Inclina o bloco inteiro */
     cursor: pointer;
     transition: 0.2s ease;
     margin-top: 1rem;
+    flex-shrink: 0;
 }
 
 
