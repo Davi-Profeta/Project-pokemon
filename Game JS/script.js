@@ -13,7 +13,6 @@ let x2P = 1, x2E = 1;
 let HPDiv, HPEnemy, HPMaxEnemy, HPPlayer, HPMaxPlayer;
 const filaDeTurnos = [];
 
-createPoke();
 
 function startBattle() {
     console.log("ok")
@@ -27,6 +26,7 @@ function startBattle() {
                 description.style.width = "35%";
 
                 ataques();
+                createPoke();
             }
 
 
