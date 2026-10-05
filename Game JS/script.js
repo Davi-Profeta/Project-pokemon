@@ -12,7 +12,7 @@ let typeEnemy, typePlayer;
 let x2P = 1, x2E = 1;
 let HPDiv, HPEnemy, HPMaxEnemy, HPPlayer, HPMaxPlayer;
 const filaDeTurnos = [];
-
+createPoke();
 
 function startBattle() {
     console.log("ok")
@@ -26,7 +26,6 @@ function startBattle() {
                 description.style.width = "35%";
 
                 ataques();
-                createPoke();
             }
 
 
@@ -55,7 +54,7 @@ function reconstrucao() {
 
 function ataques() {
 
-    movesP.forEach(element => {
+    movesS.forEach(element => {
         const divs = document.createElement("div");
         divs.classList.add("divs");
         divs.textContent = element.name;
@@ -189,7 +188,7 @@ actions.addEventListener("click", e => {
     if (e.target.classList.contains("divs")) {
 
         const text = e.target.textContent;
-        const ataque = movesP.find(e => e.name === text);
+        const ataque = movesS.find(e => e.name === text);
         const x2 = ataque.type;
 
         efetivoP(x2);
@@ -259,6 +258,7 @@ function ShiftPlayer(ataque) {
                         const porcentagem = (HPEnemy / HPMaxEnemy) * 100;
                         HPDiv[0].style.width = porcentagem + "%";
                         container.style.display = "none";
+                        console.log(HPEnemy);
 
 
                         if (HPEnemy === 0) {
