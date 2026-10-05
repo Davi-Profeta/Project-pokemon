@@ -193,7 +193,7 @@ html, body{
 
 .skew-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     width: 90%;
     height: 90%;
@@ -211,9 +211,12 @@ html, body{
 }
 
 .skew-text {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
     color: #121212;
     font-size: 3rem;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     transform: skewX(20deg); /* Compensa a inclinação para o texto ficar reto */
 }
 
@@ -284,6 +287,7 @@ html, body{
 }
 
 .skew{
+    position: relative;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -299,6 +303,54 @@ html, body{
     transition: 0.2s ease;
     margin-top: 1rem;
     flex-shrink: 0;
+}
+
+.skew::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 80%;
+    left: 50%;
+    height: 2rem;
+    transform: translateX(-50%);
+    background: wheat;
+    color: black;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 20px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.skew:hover::after {
+    opacity: 1;
+}
+
+#voltar{
+    width: 5rem;
+    height: 1.7rem;
+    border: solid black 2px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: all 0.5s ease;
+}
+#voltar:hover{
+    background-color: #e74c3c;
+    cursor: pointer;
+}
+
+#valendo{
+    width: 5rem;
+    height: 1.7rem;
+    border: solid black 2px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: all 0.5s ease;
+}
+#valendo:hover{
+    background-color: green;
+    cursor: pointer;
 }
 
 
