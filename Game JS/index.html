@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <section class="start">
+
+        <header class="battle">
+            <h1>Test Battle</h1>
+        </header>
+
+        <main class="container">
+            
+            <div class="hPokemons">
+                <h2>Escolha seu Pokémon</h2>
+            </div>
+
+            <div class="Pokemons">
+
+                <div class="Poke">
+
+                    <div class="PokeImg">
+                        <img class="individual" src="Photos/charmander Front.gif" alt="Charmander"></a>
+                    </div>
+
+                    <div class="descriptionPoke">
+                        <p class="nameStart">Charmander</p>
+                    </div>
+
+                </div>
+                    
+                <div class="Poke">
+
+                    <div class="PokeImg">
+                        <img class="individual" src="Photos/gengar Front.gif" alt="Gengar">
+                    </div>
+
+                    <div class="descriptionPoke">
+                        <p class="nameStart">Gengar</p>
+                    </div>
+                    
+                </div>
+
+                <div class="Poke">
+
+                </div>
+
+                <div class="Poke">
+
+                </div>
+
+                <div class="Poke">
+
+                </div>
+
+                <div class="Poke">
+
+                </div>
+
+                <div class="Poke">
+
+                </div>
+
+                <div class="Poke">
+
+                </div>
+
+                <div class="Poke">
+
+                </div>
+                
+            </div>
+
+
+        </main>
+
+        <dialog class="chooseMoves">
+
+            <div class="corpoMoves">
+
+                <div class="titlePoke">
+
+                    <h3 id="titlePoke">Pokémon</h3>
+
+                </div>
+
+                <div class="setMoves">
+
+                    <div class="abaPoke">
+
+                        <div class="pokeFix">
+                            <img id="gifStart" src="" alt="">
+                        </div>
+                        
+                        <div class="typeFix">
+                            <div class="typeNum">
+                                <p id="typeOne"></p>
+                            </div>
+                            <div class="typeNum">
+                                <p id="typeTwo"></p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="move">
+
+                        <div class="choose">
+
+                            <div class="selectYou">
+
+                                <div class="titulo">
+                                    <label for="">Ataque 1</label>
+                                </div>
+
+                                <div class="escolha">
+                                    <div class="skew-container">
+                                        <p class="skew-text">Escolha seu ataque</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="selectYou">
+
+                                 <div class="titulo">
+                                    <label for="">Ataque 2</label>
+                                </div>
+
+                                <div class="escolha">
+                                    <div class="skew-container">
+                                        <p class="skew-text">Escolha seu ataque</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="selectYou">
+
+                                 <div class="titulo">
+                                    <label for="">Ataque 3</label>
+                                </div>
+
+                                <div class="escolha">
+                                    <div class="skew-container">
+                                        <p class="skew-text">Escolha seu ataque</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="selectYou">
+
+                                 <div class="titulo">
+                                    <label for="">Ataque 4</label>
+                                </div>
+
+                                <div class="escolha">
+                                    <div class="skew-container">
+                                        <p class="skew-text">Escolha seu ataque</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
+                        <div class="next">
+
+                            <button id="voltar">Voltar</button>
+
+                            <button id="valendo">Confirmar</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+            </div>
+
+        </dialog>
+
+
+        <dialog class="moveList">
+
+            <div class="mainMoves">
+ 
+
+            </div>
+
+        </dialog>
+
+
+    </section>
+
+
+    <div id="loading-screen" class="loading-screen hidden">
+        <div class="spinner"></div>
+        <p>Entrando na Batalha...</p>
+    </div>
+
+    <div class="environment">
+
+        <div class="enemy">
+
+            <div class="statsE">
+                <div class="barraE">
+
+                    <div class="NameLevel">
+                        <p class="name">Gengar</p>
+
+                         <div class="LV">
+                            <p>Lv </p>
+                            <p class="nivel">80</p>
+                        </div>
+
+                    </div>
+                    <div class="HPDiv">
+                        <div class="hp">HP</div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="space">
+               <model-viewer class="pokemonE" src="Models/gengar.glb" alt="Gengar" auto-rotate camera-controls disable-zoom shadow-intensity="1"></model-viewer>
+            </div>
+            
+        </div>
+
+        <div class="player">
+
+            <div class="space">
+                <img class="pokemonP" src="https://img.pokemondb.net/sprites/black-white/anim/back-normal/charmander.gif">
+            </div>
+
+            <div class="statsP">
+                <div class="barraP">
+
+                    <div class="NameLevel">
+                        <p class="name">Charmander</p>
+
+                        <div class="LV">
+                            <p>Lv </p>
+                            <p class="nivel">80</p>
+                        </div>
+                        
+                    </div>
+                    <div class="HPDiv">
+                        <div class="hp">HP</div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="actions">
+            <div class="detalhes">
+
+            </div>
+
+            <div class="functions">
+                <p class="NameActions">FIGHT</p>
+                <p class="NameActions">BAG</p>
+                <p class="NameActions">POKÉMON</p>
+                <p class="NameActions">RUN</p>
+            </div>
+
+        </div>
+
+    </div>
+    
+    
+   
+
+</body>
+    <!-- Carregue as dependências de dados primeiro -->
+    <script src="Pokemons/Gen1/FogoStats/StatsFire.js"></script>
+    <script src="Pokemons/Gen1/GhostStats/StatsGhost.js"></script>
+    <script src="assets/Typeeffectiveness.js"></script>
+    <script src="Pokemons/Gen1/Pokedex.js"></script>
+
+
+    <!-- Carregue a lógica do jogo depois -->
+    <script src="assets/start.js"></script>
+    <script src="script.js"></script>
+</html>
