@@ -1,0 +1,788 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #121212;
+    /* Sem overflow, garante que o jogo preencha a tela sem gerar barra de rolagem */
+}
+
+
+/* ==========================================
+   ABA ANTES DA BATALHA (.start)
+   ========================================== */
+
+.start {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: opacity 0.5s ease-in-out;
+    background-color: #121212;
+}
+
+.battle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #121212;
+    min-height: 80px;
+    border: solid 5px #444;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    color: white;
+    font-weight: bold;
+}
+
+.container {
+    height: 10vh;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.hPokemons {
+    border: solid #444 3px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #121212;
+    border-radius: 8px;
+    font-size: clamp(1.2rem, 1.8vw, 2rem);
+    font-weight: bold;
+    color: aliceblue;
+}
+
+.Pokemons {
+    display: grid;
+    /* Padrão para telas menores/mobile: 1 coluna */
+    grid-template-columns: 1fr; 
+    gap: 1rem;
+    border: solid 3px #444;
+    padding: 1rem;
+    background-color: #121212;
+    border-radius: 8px;
+    flex: 1;
+    overflow-y: auto; /* Permite rolagem se a lista de pokémons exceder a altura da tela */
+}
+
+.Poke {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20rem;
+    border: solid 2px black;
+    background-color: #fff;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.PokeImg{
+    height: 80%;
+}
+
+.descriptionPoke{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20%;
+    border: solid black 2px;
+    background-color: black;
+    width: 100%;
+    color: aliceblue;
+    font-size: 1.2rem;
+}
+
+.Poke:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.individual{
+    height: 10rem;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* ============================= MODAL Choose =========================================== */
+.chooseMoves{
+    display: none;
+    margin: auto;
+    width: 90vw;
+    height: 80vh;
+    border: solid 5px black;
+    border-radius: 20px;
+    padding: 0.5rem;
+    background-color: #121212;
+}
+
+.corpoMoves{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.titlePoke{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    height: 10%;
+    border: solid #444 2px;
+    width: 100%;
+    flex: 1;
+    color: aliceblue;
+}
+
+.setMoves{
+    display: flex;
+    height: 90%;
+}
+
+.abaPoke{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    border: solid #444 2px;
+}
+
+.move{
+    width: 60%;
+    border: solid #444 2px;
+}
+
+.choose{
+    height: 85%;
+    width: 100%;
+}
+
+.selectYou{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 25%;
+    border: solid 2px black;
+}
+
+.escolha{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+    background-color: #121212;
+}
+
+.titulo{
+    width: 100%;
+    height: 30%;
+    border: solid 2px black;
+}
+
+.skew-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    height: 90%;
+    background-color: aliceblue;
+    color: #ffffff;
+    padding: 12px 25px;
+    transform: skewX(-20deg); /* Inclina o bloco inteiro */
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.skew-container:hover{
+    transform: scale(101%), skewX(-20deg);
+    background-color: rgb(175, 175, 175);
+}
+
+.skew-text {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    color: #121212;
+    font-size: 3rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    transform: skewX(20deg); /* Compensa a inclinação para o texto ficar reto */
+}
+
+.next{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 15%;
+    border: solid 2px black;
+}
+
+.pokeFix{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85%;
+    width: 100%;
+    border: solid 2px black;
+}
+
+.typeFix{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: solid black 2px;
+    height: 15%;
+}
+
+.typeNum{
+    border: solid black 3px;
+    border-radius: 10px;
+    width: 30%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#gifStart{
+    width: 80%; 
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+
+/* ============================================== MOVE LIST ===================================== */
+.moveList{
+    display: none;
+    width: 80vw;
+    height: 70vh;
+    margin: auto;
+    background-color: #121212;
+}
+
+.mainMoves{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid red 2px;
+    padding: 1rem;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.skew{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 95%;
+    height: 20%;
+    background-color: aliceblue;
+    color: black;
+    font-size: 2rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    padding: 12px 25px;
+    transform: skewX(-20deg); /* Inclina o bloco inteiro */
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 1rem;
+    flex-shrink: 0;
+}
+
+.skew::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 80%;
+    left: 50%;
+    height: 2rem;
+    transform: translateX(-50%);
+    background: wheat;
+    color: black;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 20px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.skew:hover::after {
+    opacity: 1;
+}
+
+#voltar{
+    width: 5rem;
+    height: 1.7rem;
+    border: solid black 2px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: all 0.5s ease;
+}
+#voltar:hover{
+    background-color: #e74c3c;
+    cursor: pointer;
+}
+
+#valendo{
+    width: 5rem;
+    height: 1.7rem;
+    border: solid black 2px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: all 0.5s ease;
+}
+#valendo:hover{
+    background-color: green;
+    cursor: pointer;
+}
+
+
+img {
+    image-rendering: pixelated;  /* Recomendado para Chrome, Firefox, Edge */
+    image-rendering: -moz-pixelated; /* Antigo Firefox */
+    
+    /* Importante: Garanta que a imagem não seja esticada para tamanhos quebrados */
+    /* Use resoluções que sejam múltiplos inteiros da imagem original (x2, x3, etc.) */
+}
+
+/* Animação do Spinner estilo Pokébola ou Simples */
+.loading-screen{
+    background-color: #444;
+    position: fixed;
+    display: flex;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.7rem;
+    color: aliceblue;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #e74c3c;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   RESPONSIVIDADE APENAS PARA DESKTOPS
+   (Notebooks, Monitores HD, Full HD, 4K, Ultrawides)
+   ========================================== */
+
+/* Notebooks e Desktops menores (a partir de 1024px) */
+@media screen and (min-width: 1024px) {
+    .Pokemons {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas por linha */
+    }
+    
+    .Poke {
+        height: 160px;
+    }
+}
+
+/* Desktops Médios e Full HD (a partir de 1440px) */
+@media screen and (min-width: 1440px) {
+    .start {
+        max-width: 1400px;
+        margin: 0 auto; /* Centraliza a tela em monitores muito grandes */
+    }
+
+    .Pokemons {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .Poke {
+        height: 180px;
+    }
+}
+
+/* Monitores UltraWide / 2K / 4K (a partir de 1920px) */
+@media screen and (min-width: 1920px) {
+    .start {
+        max-width: 1600px;
+    }
+
+    .Pokemons {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .Poke {
+        height: 220px;
+    }
+}
+
+
+/* ==========================================
+   COMBATE (.environment)
+   ========================================== */
+
+.environment{
+    display: none; /* o start.js é quem exibe */
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    isolation: isolate;
+    font-family: 'Trebuchet MS', 'Gill Sans', Calibri, sans-serif;
+
+    /* Arena com profundidade */
+    background:
+        radial-gradient(circle at 50% 45%, rgba(255,255,255,.22), transparent 38%),
+        linear-gradient(180deg, #18253a 0%, #314a63 42%, #182333 43%, #101721 100%);
+}
+
+/* Luzes decorativas da arena */
+.environment::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        radial-gradient(ellipse at 23% 25%, rgba(255,255,255,.13), transparent 25%),
+        radial-gradient(ellipse at 78% 20%, rgba(255,255,255,.10), transparent 24%),
+        linear-gradient(135deg, transparent 0 48%, rgba(255,255,255,.035) 49% 50%, transparent 51%);
+    pointer-events: none;
+}
+
+.environment::after{
+    content: "";
+    position: absolute;
+    left: -10%;
+    bottom: 17%;
+    width: 120%;
+    height: 28%;
+    z-index: -1;
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse at center, rgba(100,130,80,.75) 0%, rgba(48,68,49,.95) 55%, rgba(20,28,34,0) 72%);
+    box-shadow: 0 -35px 80px rgba(0,0,0,.18);
+    pointer-events: none;
+}
+
+.enemy{
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+/* Jogador: fica acima do painel de ações, com uma folga embaixo */
+.player{
+    position: absolute;
+    left: 0;
+    bottom: calc(25vh + 3vh);
+    width: 100%;
+    height: 46vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-evenly;
+}
+
+.player .space{
+    height: 100%;
+    align-items: flex-end;
+}
+
+.player .space::before{
+    bottom: -6%;
+}
+
+/* ---------- Espaço dos Pokémon + plataforma ---------- */
+.space{
+    position: relative;
+    height: 90%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.space > *{
+    position: relative;
+    z-index: 1;
+}
+
+/* plataforma elíptica embaixo de cada Pokémon */
+.space::before{
+    content: "";
+    position: absolute;
+    z-index: 0;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 22%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+        rgba(0,0,0,0.35) 0%,
+        rgba(0,0,0,0.20) 45%,
+        rgba(0,0,0,0) 70%);
+}
+
+.enemy .space::before{
+    display: none; /* sem plataforma sob o inimigo */
+}
+
+.pokemonE{
+    display: block;
+    width: clamp(180px, 20vw, 320px);
+    height: clamp(180px, 20vw, 320px);
+    border: none;
+    background-color: transparent;
+    --poster-color: transparent;
+    filter: drop-shadow(0 8px 6px rgba(0,0,0,0.25));
+}
+
+.pokemonP{
+    height: clamp(180px, 40vh, 380px);
+    width: auto;
+    border: none;
+    filter: drop-shadow(0 8px 6px rgba(0,0,0,0.3));
+    animation: idle 2.4s ease-in-out infinite;
+}
+
+@keyframes idle{
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+/* ---------- Caixas de status (nome / nível / HP) ---------- */
+.statsE,
+.statsP{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.statsP{
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.barraE,
+.barraP{
+    width: 100%;
+    max-width: 28vw;
+    min-height: 18vh;
+    height: auto;
+    margin: 2rem;
+    padding: 0.9rem 1.2rem;
+    color: #2b2b2b;
+    font-size: clamp(1rem, 1.3vw, 1.5rem);
+    font-weight: bold;
+    background: linear-gradient(to bottom, #fbf8ea, #e9e3c6);
+    border: 4px solid #3a3a3a;
+    box-shadow:
+        0 6px 0 rgba(0,0,0,0.25),
+        inset 0 0 0 2px #fff8;
+}
+
+/* formato diferente por lado, como no jogo */
+.barraE{
+    border-radius: 14px 14px 14px 40px;
+}
+
+.barraP{
+    border-radius: 14px 40px 14px 14px;
+    margin-bottom: 2rem;
+}
+
+.NameLevel{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    letter-spacing: 0.5px;
+}
+
+.NameLevel .name{
+    text-transform: uppercase;
+}
+
+.LV{
+    display: flex;
+    gap: 0.3rem;
+    font-size: 0.85em;
+}
+
+/* ---------- Barra de HP ---------- */
+.HPDiv{
+    margin-top: 0.8rem;
+    padding: 3px;
+    background: #3a3a3a;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.hp{
+    width: 100%; /* o JS altera essa largura em % */
+    height: 16px;
+    line-height: 16px;
+    padding-left: 10px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, #7be26b 0%, #2ea62e 55%, #1f7d22 100%);
+    transition: width 1s linear;
+}
+
+/* ---------- Painel de ações ---------- */
+.actions{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    gap: 0.8rem;
+    width: 100%;
+    height: 25vh;
+    padding: 0.8rem;
+    background: linear-gradient(to bottom, #2b2f3a, #14161c);
+    border-top: 5px solid #0b0c10;
+    box-shadow: 0 -6px 16px rgba(0,0,0,0.35);
+}
+
+/* caixa de texto */
+.detalhes{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    padding: 0.8rem 1.4rem;
+    font-size: clamp(1.1rem, 2.2vw, 2.2rem);
+    font-weight: bold;
+    line-height: 1.3;
+    color: #1d1d1d;
+    background: linear-gradient(to bottom, #fdfdf5, #ecebd9);
+    border: 5px solid #5b6b99;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 3px #fff, 0 4px 0 rgba(0,0,0,0.4);
+}
+
+/* menu de botões */
+.functions{
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 0.6rem;
+    width: 50%;
+    height: 100%;
+    padding: 0.6rem;
+    background: linear-gradient(to bottom, #f4f6fb, #d7dcec);
+    border: 5px solid #5b6b99;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 3px #fff, 0 4px 0 rgba(0,0,0,0.4);
+}
+
+/* FIGHT / BAG / POKÉMON / RUN */
+.NameActions{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    font-size: clamp(0.9rem, 1.8vw, 2rem);
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    border: 3px solid rgba(0,0,0,0.35);
+    border-radius: 12px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+    text-shadow: 0 2px 0 rgba(0,0,0,0.35);
+    transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+
+.NameActions:nth-child(1){ background: linear-gradient(#f06a5b, #c0392b); } /* FIGHT */
+.NameActions:nth-child(2){ background: linear-gradient(#f5b94a, #d98c14); } /* BAG */
+.NameActions:nth-child(3){ background: linear-gradient(#6fcf6f, #2e9e3e); } /* POKÉMON */
+.NameActions:nth-child(4){ background: linear-gradient(#6aa9f0, #2f6fc4); } /* RUN */
+
+.NameActions:hover{
+    transform: translateY(-3px);
+    filter: brightness(1.12);
+    box-shadow: 0 7px 0 rgba(0,0,0,0.3);
+}
+
+.NameActions:active{
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+}
+
+/* botões de ataque (lista de golpes, 2 x 2) */
+.divs{
+    width: calc(50% - 0.3rem);
+    height: calc(50% - 0.3rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.5rem;
+    font-size: clamp(0.9rem, 1.6vw, 1.8rem);
+    font-weight: 900;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1d1d1d;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(#ffffff, #e3e3e3);
+    border: 3px solid #5b6b99;
+    border-radius: 10px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+    transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+}
+
+.divs:hover{
+    transform: translateY(-2px);
+    background: linear-gradient(#fff7c2, #f5d95c);
+    box-shadow: 0 6px 0 rgba(0,0,0,0.25);
+}
+
+.divs:active{
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.25);
+}
+
+/* ---------- Telas menores ---------- */
+@media screen and (max-width: 900px){
+    .barraE,
+    .barraP{
+        max-width: 42vw;
+        margin: 1rem;
+    }
+}
